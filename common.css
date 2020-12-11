@@ -1,0 +1,16 @@
+body {
+    font-size: 100%;
+    margin: 0;
+    font-family: helvetica, arial, sans-serif;
+}
+
+.container {
+    margin: 1em;
+}
+
+@media (min-width: 990px) {
+    .container {
+        width: 960px;
+        margin: 5em auto;
+    }
+}
