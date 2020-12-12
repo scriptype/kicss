@@ -20,7 +20,8 @@ body {
     width: min(40vw, 960px);
     height: min(30vw, 720px);
     font-size: 10vmin;
-    background: royalblue;
+    background: mediumblue;
+    color: white;
     border-radius: 8px;
     transform:
         rotateX(calc( -30deg + (1 - var(--cursor-y-1)) * 60deg))
