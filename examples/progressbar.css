@@ -6,3 +6,10 @@
     height: 8px;
     background: rgba(15, 127, 255, .5);
 }
+
+/* or:
+ *
+ * width: 100%;
+ * transform-origin: left center;
+ * transform: scaleX(var(--scroll-y-1));
+ */
