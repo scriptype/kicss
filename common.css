@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-size: 100%;
     margin: 0;
@@ -5,12 +9,13 @@ body {
 }
 
 .container {
-    margin: 1em;
+    padding: 1em;
 }
 
 @media (min-width: 990px) {
     .container {
         width: 960px;
-        margin: 5em auto;
+        margin: 0 auto;
+        padding: 5em 0;
     }
 }
