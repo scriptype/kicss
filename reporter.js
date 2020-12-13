@@ -1,9 +1,9 @@
-;(() => {
+;((root) => {
   const setCSSProperty = (key, value) => {
     document.documentElement.style.setProperty(key, value)
   }
 
-  const reportCursor = ({ x, y }) => {
+  const reportPageCursor = ({ x, y }) => {
     setCSSProperty('--cursor-x', x)
     setCSSProperty('--cursor-y', y)
 
@@ -13,7 +13,7 @@
     setCSSProperty('--cursor-y-1', y / innerHeight)
   }
 
-  const reportScroll = () => {
+  const reportPageScroll = () => {
     const { scrollTop, scrollLeft } = document.documentElement
     setCSSProperty('--scroll-x', scrollLeft)
     setCSSProperty('--scroll-y', scrollTop)
@@ -24,14 +24,28 @@
     setCSSProperty('--scroll-y-1', scrollTop / (scrollHeight - innerHeight))
   }
 
-  const init = () => {
-    window.addEventListener('mousemove', reportCursor)
-    window.addEventListener('scroll', reportScroll)
-    window.addEventListener('resize', reportScroll)
+  const reportScroll = ({ direction, name }) => (event) => {
+    const { target } = event
+    if (direction === 'horizontal') {
+      const { scrollLeft, scrollWidth } = target
+      const { clientWidth: targetWidth } = target
+      const normalizedScroll = scrollLeft / (scrollWidth - targetWidth)
+      setCSSProperty(name, normalizedScroll)
+    }
+  }
 
-    reportCursor({ x: 0, y: 0 })
-    reportScroll()
+  const init = () => {
+    window.addEventListener('mousemove', reportPageCursor)
+    window.addEventListener('scroll', reportPageScroll)
+    window.addEventListener('resize', reportPageScroll)
+
+    reportPageCursor({ x: 0, y: 0 })
+    reportPageScroll()
+  }
+
+  root.InteractionReporter = {
+    reportScroll
   }
 
   init()
-})()
+})(window)
