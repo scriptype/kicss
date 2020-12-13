@@ -1,0 +1,85 @@
+:root {
+    --carousel-scroll: 0;
+}
+
+.content {
+    display: grid;
+    place-items: center;
+}
+
+.carousel-container {
+    --items: 4;
+    --item-width: 720px;
+    --tabline-padding: 48px;
+    width: var(--item-width);
+}
+
+.tabs {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    height: 48px;
+    padding: 0 var(--tabline-padding);
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+}
+
+.tab {
+    border: none;
+    background: none;
+    font: inherit;
+    appearance: none;
+    outline: none;
+    padding: 0;
+
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+}
+
+.active-tab-indicator {
+    position: absolute;
+    z-index: -1;
+    top: 50%;
+    left: 0;
+    transform:
+        translateY(-50%)
+        translateX(
+            calc(
+                var(--tabline-padding) +
+                var(--carousel-scroll) *
+                (var(--item-width) - var(--tabline-padding) * 3) -
+                26.5px
+            )
+        );
+    display: inline-block;
+    width: 100px;
+    height: 80%;
+    background: #ccc;
+    border-radius: 4px;
+}
+
+.carousel {
+    display: flex;
+    width: var(--item-width);
+    height: 300px;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+}
+
+.carousel-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: var(--item-width);
+    height: 100%;
+    scroll-snap-align: start;
+
+    font-size: 1.2em;
+    text-transform: uppercase;
+    letter-spacing: .15em;
+    text-align: center;
+}
