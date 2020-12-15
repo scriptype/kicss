@@ -7,10 +7,12 @@
     })
   })
 
-  const { reportScroll } = window.InteractionReporter
+  const { reportVariable, reportScroll } = window.InteractionReporter
   const carousel = document.querySelector('.carousel')
   carousel.addEventListener('scroll', reportScroll({
     direction: 'horizontal',
     name: '--carousel-scroll'
   }))
+
+  reportVariable('--items', panels.length)
 })()

@@ -2,7 +2,6 @@
  * Unfortunately this code relies on a few constraints that may be impractical
  * in a real-life scenario:
  *
- * - Number of tabs should be known by CSS and reflected to --items
  * - All tabs should have the same width and it should be reflected to --tab-width
  * - Carousel item width should be known by CSS and reflected to --item-width
  *
@@ -21,7 +20,6 @@
 }
 
 .carousel-container {
-    --items: 4;
     --item-width: 720px;
     --tabline-padding: 48px;
     --tab-width: 53px;
