@@ -14,21 +14,18 @@ body {
 
 .item {
     position: absolute;
+    top: 50%;
+    left: 50%;
 }
 
 .item-1 {
-    top: 50%;
-    left: 50%;
     width: min(40vw, 960px);
     height: min(30vw, 720px);
     background: skyblue;
-    transform:
-        translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 }
 
 .item-2 {
-    top: 50%;
-    left: 50%;
     width: min(40vw, 960px);
     height: min(10vw, 240px);
     background: seagreen;
@@ -40,8 +37,6 @@ body {
 }
 
 .item-3 {
-    top: 50%;
-    left: 50%;
     width: min(10vw, 160px);
     height: min(10vw, 160px);
     background: gold;
@@ -54,9 +49,6 @@ body {
 }
 
 .item-4 {
-    top: 50%;
-    left: 50%;
-    display: inline-block;
     font-size: 5vw;
     transform:
         translate(
