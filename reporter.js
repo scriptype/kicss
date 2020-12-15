@@ -34,6 +34,10 @@
     }
   }
 
+  const reportVariable = (name, value) => {
+    setCSSProperty(name, value)
+  }
+
   const init = () => {
     window.addEventListener('mousemove', reportPageCursor)
     window.addEventListener('scroll', reportPageScroll)
@@ -44,7 +48,8 @@
   }
 
   root.InteractionReporter = {
-    reportScroll
+    reportScroll,
+    reportVariable
   }
 
   init()
