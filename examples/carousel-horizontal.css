@@ -11,6 +11,7 @@
     --items: 4;
     --item-width: 720px;
     --tabline-padding: 48px;
+    --tab-width: 53px;
     width: var(--item-width);
 }
 
@@ -51,7 +52,7 @@
                 var(--tabline-padding) +
                 var(--carousel-scroll) *
                 (var(--item-width) - var(--tabline-padding) * 3) -
-                26.5px
+                var(--tab-width) / 2
             )
         );
     display: inline-block;
