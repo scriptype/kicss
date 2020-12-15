@@ -24,6 +24,6 @@ body {
     color: white;
     border-radius: 8px;
     transform:
-        rotateX(calc( -30deg + (1 - var(--cursor-y-1)) * 60deg))
-        rotateY(calc( -30deg + var(--cursor-x-1) * 60deg));
+        rotateX(calc(-30deg + (1 - var(--cursor-y-1)) * 60deg))
+        rotateY(calc(-30deg + var(--cursor-x-1) * 60deg));
 }
