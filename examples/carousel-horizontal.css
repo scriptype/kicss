@@ -1,19 +1,3 @@
-/*
- * Unfortunately this code relies on a few constraints that may be impractical
- * in a real-life scenario:
- *
- * - All tabs should have the same width and it should be reflected to --tab-width
- * - Carousel item width should be known by CSS and reflected to --item-width
- *
- * For these reasons, perhaps it's better not to use tabs at all, and instead
- * use animated-but-fixed-width-dots to indicate the active item of the carousel.
- *
- * */
-
-:root {
-    --carousel-scroll: 0;
-}
-
 .content {
     display: grid;
     place-items: center;
@@ -22,16 +6,16 @@
 .carousel-container {
     --item-width: 720px;
     --tabline-padding: 48px;
-    --tab-width: 53px;
+    --active-tab-outline-width: calc(
+        var(--item-width) / var(--items) * 0.8
+    );
     width: var(--item-width);
 }
 
 .tabs {
     position: relative;
     display: flex;
-    justify-content: space-between;
     height: 48px;
-    padding: 0 var(--tabline-padding);
     border: 1px solid #d9d9d9;
     border-radius: 6px;
 }
@@ -41,14 +25,18 @@
     background: none;
     font: inherit;
     appearance: none;
-    outline: none;
     padding: 0;
+    width: calc(var(--item-width) / var(--items));
 
     display: inline-flex;
     justify-content: center;
     align-items: center;
 
     cursor: pointer;
+}
+
+.tab:focus:not(:focus-visible) {
+  outline: none;
 }
 
 .active-tab-indicator {
@@ -60,16 +48,14 @@
         translateY(-50%)
         translateX(
             calc(
-                var(--tabline-padding) +
-                var(--carousel-scroll) *
-                (var(--item-width) - var(--tabline-padding) * 3) -
-                var(--tab-width) / 2
+                var(--tabline-position) * 1px -
+                var(--active-tab-outline-width) / 2
             )
         );
     display: inline-block;
-    width: 100px;
+    width: var(--active-tab-outline-width);
     height: 80%;
-    background: #ccc;
+    background: powderblue;
     border-radius: 4px;
 }
 
