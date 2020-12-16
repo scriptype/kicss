@@ -1,5 +1,4 @@
 ;(() => {
-  const tabsContainer = document.querySelector('.tabs')
   const tabs = Array.from(document.querySelectorAll('.tab'))
   const panels = Array.from(document.querySelectorAll('.carousel-item'))
   tabs.forEach((tab, index) => {
