@@ -26,7 +26,7 @@
     font: inherit;
     appearance: none;
     padding: 0;
-    width: calc(var(--item-width) / var(--items));
+    flex: 1;
 
     display: inline-flex;
     justify-content: center;
