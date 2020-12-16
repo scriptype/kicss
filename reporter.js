@@ -1,4 +1,13 @@
 ;((root) => {
+  const interpolate = ({ value, inputRange, outputRange}) => {
+    let interpolated = value
+    interpolated = (interpolated - inputRange[0]) / (last(inputRange) - inputRange[0])
+    interpolated = interpolated * (last(outputRange) - outputRange[0]) + outputRange[0]
+    return interpolated
+  }
+
+  const last = (array) => array[array.length - 1]
+
   const setCSSProperty = (key, value) => {
     document.documentElement.style.setProperty(key, value)
   }
@@ -24,13 +33,29 @@
     setCSSProperty('--scroll-y-1', scrollTop / (scrollHeight - innerHeight))
   }
 
-  const reportScroll = ({ direction, name }) => (event) => {
+  const reportScroll = ({ direction, name, interpolations }) => (event) => {
     const { target } = event
     if (direction === 'horizontal') {
-      const { scrollLeft, scrollWidth } = target
-      const { clientWidth: targetWidth } = target
+      const { scrollLeft } = target
+      setCSSProperty(name, scrollLeft)
+
+      const { scrollWidth, clientWidth: targetWidth } = target
       const normalizedScroll = scrollLeft / (scrollWidth - targetWidth)
-      setCSSProperty(name, normalizedScroll)
+      setCSSProperty(`${name}-1`, normalizedScroll)
+
+      if (!interpolations) {
+        return
+      }
+
+      interpolations.forEach(interpolation => {
+        const { name: interpolationName, inputRange, outputRange } = interpolation
+        const interpolated = interpolate({
+          value: scrollLeft,
+          inputRange,
+          outputRange
+        })
+        setCSSProperty(interpolationName, interpolated)
+      })
     }
   }
 
