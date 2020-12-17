@@ -1,12 +1,25 @@
 ;((root) => {
-  const interpolate = ({ value, inputRange, outputRange}) => {
-    let interpolated = value
-    interpolated = (interpolated - inputRange[0]) / (last(inputRange) - inputRange[0])
-    interpolated = interpolated * (last(outputRange) - outputRange[0]) + outputRange[0]
-    return interpolated
+  function findRange(input, inputRange) {
+    let i
+    for (i = 1; i < inputRange.length - 1; ++i) {
+      if (inputRange[i] >= input) {
+        break
+      }
+    }
+    return i - 1
   }
 
-  const last = (array) => array[array.length - 1]
+  const interpolate = ({ value, inputRange, outputRange}) => {
+    const range = findRange(value, inputRange)
+    const inputMin = inputRange[range]
+    const inputMax = inputRange[range + 1]
+    const outputMin = outputRange[range]
+    const outputMax = outputRange[range + 1]
+    let interpolated = value
+    interpolated = (interpolated - inputMin) / (inputMax - inputMin)
+    interpolated = interpolated * (outputMax - outputMin) + outputMin
+    return interpolated
+  }
 
   const setCSSProperty = (key, value) => {
     document.documentElement.style.setProperty(key, value)
