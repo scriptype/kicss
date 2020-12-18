@@ -11,6 +11,12 @@
     width: var(--item-width);
 }
 
+@media (max-width: 720px) {
+    .carousel-container {
+        --item-width: 100vw;
+    }
+}
+
 .tabs {
     box-sizing: content-box;
     position: relative;
@@ -41,6 +47,26 @@
   outline: none;
 }
 
+@media (max-width: 719px) {
+    .tab {
+        padding: 0 14px;
+    }
+
+    .tab-title--full {
+        display: none;
+    }
+
+    .tab-title--mini {
+        display: block;
+    }
+}
+
+@media (min-width: 720px) {
+    .tab-title--mini {
+        display: none;
+    }
+}
+
 .active-tab-indicator {
     position: absolute;
     z-index: -1;
@@ -54,6 +80,12 @@
     height: var(--tab-height);
     background: hsl(187, 51.9%, 89%);
     border-radius: 8px;
+}
+
+@media (max-width: 719px) {
+    .active-tab-indicator {
+        border-radius: 50%;
+    }
 }
 
 .carousel {
