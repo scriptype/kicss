@@ -19,13 +19,21 @@
     interpolations: [
       {
         name: '--tabline-position',
-        inputRange: panels.map((panel, i) => panel.offsetWidth * i),
-        outputRange: tabs.map((tab) => tab.offsetLeft + tab.offsetWidth / 2)
+        inputRange() {
+          return panels.map((panel, i) => panel.offsetWidth * i)
+        },
+        outputRange() {
+          return tabs.map((tab) => tab.offsetLeft + tab.offsetWidth / 2)
+        }
       },
       {
         name: '--active-tab-width',
-        inputRange: panels.map((panel, i) => panel.offsetWidth * i),
-        outputRange: tabs.map((tab) => tab.offsetWidth)
+        inputRange() {
+          return panels.map((panel, i) => panel.offsetWidth * i)
+        },
+        outputRange() {
+          return tabs.map((tab) => tab.offsetWidth)
+        }
       }
     ]
   }))

@@ -64,8 +64,8 @@
         const { name: interpolationName, inputRange, outputRange } = interpolation
         const interpolated = interpolate({
           value: scrollLeft,
-          inputRange,
-          outputRange
+          inputRange: inputRange(),
+          outputRange: outputRange()
         })
         setCSSProperty(interpolationName, interpolated)
       })
