@@ -21,6 +21,19 @@
     return interpolated
   }
 
+  let rangeCache = {}
+  const cacheRanges = (interpolationName, ranges, cacheDuration) => {
+    const cachedRanges = rangeCache[interpolationName]
+    if (cachedRanges && (Date.now() - cachedRanges.timestamp < cacheDuration)) {
+      return cachedRanges.ranges
+    }
+    rangeCache[interpolationName] = {
+      ranges: ranges.map(r => r()),
+      timestamp: Date.now()
+    }
+    return rangeCache[interpolationName].ranges
+  }
+
   const setCSSProperty = (key, value) => {
     document.documentElement.style.setProperty(key, value)
   }
@@ -61,11 +74,20 @@
       }
 
       interpolations.forEach(interpolation => {
-        const { name: interpolationName, inputRange, outputRange } = interpolation
+        const {
+          name: interpolationName,
+          inputRange,
+          outputRange,
+          cache = true,
+          cacheDuration = 300
+        } = interpolation
+        const [cachedInputRange, cachedOutputRane] = cache
+          ? cacheRanges(interpolationName, [inputRange, outputRange], cacheDuration)
+          : [inputRange(), outputRange()]
         const interpolated = interpolate({
           value: scrollLeft,
-          inputRange: inputRange(),
-          outputRange: outputRange()
+          inputRange: cachedInputRange,
+          outputRange: cachedOutputRane
         })
         setCSSProperty(interpolationName, interpolated)
       })
@@ -79,7 +101,10 @@
   const init = () => {
     window.addEventListener('mousemove', reportPageCursor)
     window.addEventListener('scroll', reportPageScroll)
-    window.addEventListener('resize', reportPageScroll)
+    window.addEventListener('resize', (e) => {
+      rangeCache = {}
+      reportPageScroll(e)
+    })
 
     reportPageCursor({ x: 0, y: 0 })
     reportPageScroll()
