@@ -61,37 +61,45 @@
 
   const reportScroll = ({ direction, name, interpolations }) => (event) => {
     const { target } = event
+    let absoluteScroll
+    let targetScrollSize
+    let targetSize
     if (direction === 'horizontal') {
-      const { scrollLeft } = target
-      setCSSProperty(name, scrollLeft)
-
-      const { scrollWidth, clientWidth: targetWidth } = target
-      const normalizedScroll = scrollLeft / (scrollWidth - targetWidth)
-      setCSSProperty(`${name}-1`, normalizedScroll)
-
-      if (!interpolations) {
-        return
-      }
-
-      interpolations.forEach(interpolation => {
-        const {
-          name: interpolationName,
-          inputRange,
-          outputRange,
-          cache = true,
-          cacheDuration = 300
-        } = interpolation
-        const [cachedInputRange, cachedOutputRane] = cache
-          ? cacheRanges(interpolationName, [inputRange, outputRange], cacheDuration)
-          : [inputRange(), outputRange()]
-        const interpolated = interpolate({
-          value: scrollLeft,
-          inputRange: cachedInputRange,
-          outputRange: cachedOutputRane
-        })
-        setCSSProperty(interpolationName, interpolated)
-      })
+      absoluteScroll = target.scrollLeft
+      targetScrollSize = target.scrollWidth
+      targetSize = target.clientWidth
+    } else if (direction === 'vertical') {
+      absoluteScroll = target.scrollTop
+      targetScrollSize = target.scrollHeight
+      targetSize = target.clientHeight
+    } else {
+      throw new Error('"direction" can be only "horizontal" or "vertical".')
     }
+    setCSSProperty(name, absoluteScroll)
+    setCSSProperty(`${name}-1`, absoluteScroll / (targetScrollSize - targetSize))
+
+    if (!interpolations) {
+      return
+    }
+
+    interpolations.forEach(interpolation => {
+      const {
+        name: interpolationName,
+        inputRange,
+        outputRange,
+        cache = true,
+        cacheDuration = 300
+      } = interpolation
+      const [cachedInputRange, cachedOutputRane] = cache
+        ? cacheRanges(interpolationName, [inputRange, outputRange], cacheDuration)
+        : [inputRange(), outputRange()]
+      const interpolated = interpolate({
+        value: absoluteScroll,
+        inputRange: cachedInputRange,
+        outputRange: cachedOutputRane
+      })
+      setCSSProperty(interpolationName, interpolated)
+    })
   }
 
   const reportVariable = (name, value) => {
