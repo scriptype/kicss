@@ -8,6 +8,10 @@
     font-size: 100%;
 }
 
+body {
+    overflow-x: hidden;
+}
+
 .container {
     padding: 0;
     width: 100%;
