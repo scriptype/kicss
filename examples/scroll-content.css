@@ -17,6 +17,47 @@ body {
     width: 100%;
 }
 
+.tabs {
+    --tabline-position-px: calc(var(--tabline-position) * 1px);
+    --tab-color: hsl( calc(var(--slider-scroll-1) * 180), 66%, 12%);
+    position: absolute;
+    top: 50%;
+    left: 1em;
+    transform: translateY(-50%);
+    filter: url("#goey");
+}
+
+.tab {
+    background: none;
+    border: none;
+    appearance: none;
+
+    display: block;
+    width: 1em;
+    height: 1em;
+    margin-bottom: 1.25em;
+    background: var(--tab-color);
+    border-radius: 50%;
+    cursor: pointer;
+    text-indent: -9999px;
+}
+
+.tab:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.active-tab-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(-0.5em, var(--tabline-position-px));
+    display: block;
+    width: 2em;
+    height: 2em;
+    background: var(--tab-color);
+    border-radius: 50%;
+}
+
 .content {
     display: flex;
     flex-direction: column;
