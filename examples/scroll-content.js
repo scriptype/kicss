@@ -19,12 +19,20 @@
       {
         name: '--tabline-position',
         inputRange() {
-          return panels.map((panel, i) => panel.offsetTop)
+          return panels.map((p) => p.offsetTop)
         },
         outputRange() {
-          return tabs.map((tab) => tab.offsetTop - tab.offsetHeight / 2)
+          return tabs.map((t) => t.offsetTop - t.offsetHeight / 2)
         }
-      }
+      },
+      ...panels.map((panel, panelIndex) => ({
+        name: '--panel-activation-1',
+        scope: panel,
+        inputRange() {
+          return panels.map(p => p.offsetTop)
+        },
+        outputRange: panels.map((p, i) => i === panelIndex ? 1 : 0)
+      }))
     ]
   }))
 })()
