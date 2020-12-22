@@ -28,14 +28,14 @@
       return cachedRanges.ranges
     }
     rangeCache[interpolationName] = {
-      ranges: ranges.map(r => r()),
+      ranges: ranges.map(r => typeof r === 'function' ? r() : r),
       timestamp: Date.now()
     }
     return rangeCache[interpolationName].ranges
   }
 
-  const setCSSProperty = (key, value) => {
-    document.documentElement.style.setProperty(key, value)
+  const setCSSProperty = (key, value, element = window.document.documentElement) => {
+    element.style.setProperty(key, value)
   }
 
   const reportPageCursor = ({ x, y }) => {
@@ -82,28 +82,32 @@
       return
     }
 
-    interpolations.forEach(interpolation => {
+    interpolations.forEach((interpolation, interpolationIndex) => {
       const {
         name: interpolationName,
+        scope,
         inputRange,
         outputRange,
         cache = true,
         cacheDuration = 300
       } = interpolation
       const [cachedInputRange, cachedOutputRane] = cache
-        ? cacheRanges(interpolationName, [inputRange, outputRange], cacheDuration)
-        : [inputRange(), outputRange()]
+        ? cacheRanges(`${interpolationName}-${interpolationIndex}`, [inputRange, outputRange], cacheDuration)
+        : [
+          typeof inputRange === 'function' ? inputRange() : inputRange,
+          typeof outputRange === 'function' ? outputRange() : outputRange,
+        ]
       const interpolated = interpolate({
         value: absoluteScroll,
         inputRange: cachedInputRange,
         outputRange: cachedOutputRane
       })
-      setCSSProperty(interpolationName, interpolated)
+      setCSSProperty(interpolationName, interpolated, scope)
     })
   }
 
-  const reportVariable = (name, value) => {
-    setCSSProperty(name, value)
+  const reportVariable = (name, value, scope) => {
+    setCSSProperty(name, value, scope)
   }
 
   const init = () => {
