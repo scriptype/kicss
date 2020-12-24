@@ -110,6 +110,24 @@
     setCSSProperty(name, value, scope)
   }
 
+  const reportIndex = (selector, {
+    indexVariableName = '--index',
+    rowIndexVariableName = '--row-index',
+    rowIndexBy
+  } = {
+    indexVariableName: '--index',
+    rowIndexVariableName: '--row-index'
+  }) => {
+    const elements = Array.from(document.querySelectorAll(selector))
+    elements.forEach((element, index) => {
+      setCSSProperty(indexVariableName, index, element)
+      if (typeof rowIndexBy === 'number') {
+        const rowIndex = Math.floor(index / rowIndexBy)
+        setCSSProperty(rowIndexVariableName, rowIndex, element)
+      }
+    })
+  }
+
   const init = () => {
     window.addEventListener('mousemove', reportPageCursor)
     window.addEventListener('scroll', reportPageScroll)
@@ -124,7 +142,8 @@
 
   root.InteractionReporter = {
     reportScroll,
-    reportVariable
+    reportVariable,
+    reportIndex
   }
 
   init()
