@@ -1,0 +1,52 @@
+:root {
+    --cursor-x-px: calc( var(--cursor-x) * 1px );
+    --cursor-y-px: calc( var(--cursor-y) * 1px );
+}
+
+body {
+    overflow: hidden;
+    background: black;
+}
+
+.container {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    position: relative;
+}
+
+.heading h1 {
+    margin: 0;
+    padding: 3em 0 0 1em;
+    color: lavenderblush;
+    font-variant: all-petite-caps;
+}
+
+.content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+.item {
+    --size: calc(36vw - (var(--index) * 1.5vw));
+    position: absolute;
+    transform: translate(
+        calc( var(--cursor-x-px) - 50%),
+        calc( var(--cursor-y-px) - 50%)
+    );
+    width: var(--size);
+    height: var(--size);
+    color: hsl(
+        calc(130 + var(--cursor-x-1) * 30),
+        calc(40.3% + var(--cursor-y-1) * 20%),
+        calc(46.3% - var(--cursor-y-1) * 20%)
+    );
+    box-shadow: 0 0 0 14px currentColor;
+    border-radius: 50%;
+    will-change: transform, color;
+    transition: transform .8s;
+    transition-delay: calc( var(--index) * -4ms);
+}
