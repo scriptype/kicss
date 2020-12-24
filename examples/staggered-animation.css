@@ -1,0 +1,52 @@
+.content {
+    width: 640px;
+    height: 480px;
+    display: grid;
+    grid-template-columns: repeat(var(--row-length), 1fr);
+    align-items: center;
+    justify-content: center;
+    perspective: 100vmin;
+}
+
+.item {
+    width: 32px;
+    height: 96px;
+    background: hsl(
+        calc(180 + 1 * var(--index)),
+        100%,
+        calc(50% + 3% * var(--row-index))
+    );
+}
+
+.content.rotate .item {
+    animation: rotate 2s infinite;
+    animation-delay: calc(
+        var(--index) * -24ms +
+        var(--row-index) * 240ms
+    );
+}
+
+.content.scale .item {
+    animation: scale 2s infinite;
+    animation-delay: calc(
+        var(--index) * -24ms
+    );
+}
+
+@keyframes rotate {
+    from, to {
+        transform: rotateX(-60deg);
+    }
+    50% {
+        transform: rotateX(60deg);
+    }
+}
+
+@keyframes scale {
+    from, to {
+        transform: scaleY(1);
+    }
+    50% {
+        transform: scaleY(0.01);
+    }
+}

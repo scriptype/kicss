@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Staggered animation experiment</title>
+        <link rel="icon" type="image/png" href="favicon.png" />
+        <link rel="stylesheet" href="../common.css" />
+        <link rel="stylesheet" href="staggered-animation.css" />
+    </head>
+
+    <body>
+        <div class="container">
+            <header class="heading">
+                <h1>Staggered Animation</h1>
+
+                <fieldset>
+                    <legend>animation</legend>
+                    <label for="rotate">rotate</label>
+                    <input type="radio" id="rotate" name="animation" value="rotate" checked />
+                    <label for="scale">scale</label>
+                    <input type="radio" id="scale" name="animation" value="scale" />
+                </fieldset>
+            </header>
+
+            <main class="content rotate"></main>
+        </div>
+        <script type="text/javascript" src="../reporter.js"></script>
+        <script type="text/javascript" src="./staggered-animation.js"></script>
+    </body>
+
+</html>
