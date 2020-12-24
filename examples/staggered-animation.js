@@ -13,12 +13,7 @@ reportIndex('.item', {
 
 ;[rotate, scale].forEach(option => {
   option.addEventListener('click', e => {
-    if (scale.checked) {
-      content.classList.remove('rotate')
-      content.classList.add('scale')
-    } else  {
-      content.classList.remove('scale')
-      content.classList.add('rotate')
-    }
+    content.classList.toggle('rotate', rotate.checked)
+    content.classList.toggle('scale', scale.checked)
   })
 })
