@@ -12,9 +12,9 @@
     width: 32px;
     height: 96px;
     background: hsl(
-        calc(180 + 1 * var(--index)),
+        calc(160 + 1 * var(--index)),
         100%,
-        calc(50% + 3% * var(--row-index))
+        calc(50% + -15% * var(--row-index))
     );
 }
 
