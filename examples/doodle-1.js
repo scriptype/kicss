@@ -1,4 +1,4 @@
-import { reportIndex } from '../reporter.js'
+import { reportGlobals, reportIndex } from '../reporter.js'
 
 const content = document.querySelector('.content')
 for (let i = 0; i < 31; i++) {
@@ -6,3 +6,7 @@ for (let i = 0; i < 31; i++) {
 }
 
 reportIndex('.item')
+
+reportGlobals({
+  cursor: true
+})

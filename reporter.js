@@ -1,4 +1,5 @@
 import interpolate, { cacheRanges, purgeRangeCache } from './lib/interpolation.js'
+import { getScriptParameters } from './lib/helpers.js'
 
 const setCSSProperty = (key, value, element = window.document.documentElement) => {
   element.style.setProperty(key, value)
@@ -94,22 +95,30 @@ const reportIndex = (selector, {
   })
 }
 
-const init = () => {
-  window.addEventListener('mousemove', reportPageCursor)
-  window.addEventListener('scroll', reportPageScroll)
-  window.addEventListener('resize', (e) => {
-    purgeRangeCache()
-    reportPageScroll(e)
-  })
-
-  reportPageCursor({ x: 0, y: 0 })
-  reportPageScroll()
+const reportGlobals = ({ scroll, cursor } = { scroll: true, cursor: true }) => {
+  if (cursor) {
+    window.addEventListener('mousemove', reportPageCursor)
+    reportPageCursor({ x: 0, y: 0 })
+  }
+  if (scroll) {
+    window.addEventListener('scroll', reportPageScroll)
+    window.addEventListener('resize', (e) => {
+      purgeRangeCache()
+      reportPageScroll(e)
+    })
+    reportPageScroll()
+  }
 }
 
-init()
+const queryParameters = getScriptParameters('reporter.js')
+if (queryParameters && queryParameters.report) {
+  const globalsToReport = queryParameters.report
+  reportGlobals(globalsToReport)
+}
 
 export {
   reportScroll,
   reportVariable,
-  reportIndex
+  reportIndex,
+  reportGlobals
 }
