@@ -5,8 +5,8 @@ const setCSSProperty = (key, value, element = window.document.documentElement) =
 }
 
 const reportPageCursor = ({ x, y }) => {
-  setCSSProperty('--cursor-x', x)
-  setCSSProperty('--cursor-y', y)
+  setCSSProperty('--cursor-x', `${x}px`)
+  setCSSProperty('--cursor-y',`${y}px`)
 
   const { innerWidth, innerHeight } = window
 

@@ -1,8 +1,3 @@
-:root {
-    --cursor-x-px: calc( var(--cursor-x) * 1px );
-    --cursor-y-px: calc( var(--cursor-y) * 1px );
-}
-
 body {
     overflow: hidden;
     background: black;
@@ -33,8 +28,8 @@ body {
     --size: calc(60vw - (var(--index) * 2vw));
     position: absolute;
     transform: translate(
-        calc( var(--cursor-x-px) - 50%),
-        calc( var(--cursor-y-px) - 50%)
+        calc( var(--cursor-x) - 50%),
+        calc( var(--cursor-y) - 50%)
     );
     width: var(--size);
     height: var(--size);
