@@ -1,4 +1,4 @@
-import interpolate, { cacheRanges, purgeRangeCache } from './lib/interpolation.js'
+import { performInterpolation, purgeRangeCache } from './lib/interpolation.js'
 import { getScriptParameters } from './lib/helpers.js'
 
 const setCSSProperty = (key, value, element = window.document.documentElement) => {
@@ -15,7 +15,7 @@ const reportPageCursor = ({ x, y }) => {
   setCSSProperty('--cursor-y-1', y / innerHeight)
 }
 
-const reportPageScroll = () => {
+const reportPageScroll = ({ direction, interpolations }) => () => {
   const { scrollTop, scrollLeft } = document.documentElement
   setCSSProperty('--scroll-x', scrollLeft)
   setCSSProperty('--scroll-y', scrollTop)
@@ -24,6 +24,23 @@ const reportPageScroll = () => {
   const { innerWidth, innerHeight } = window
   setCSSProperty('--scroll-x-1', scrollLeft / (scrollWidth - innerWidth))
   setCSSProperty('--scroll-y-1', scrollTop / (scrollHeight - innerHeight))
+
+  if (interpolations) {
+    if (!direction) {
+      throw new Error('"direction" must be provided for interpolations')
+    }
+    if (direction !== 'horizontal' && direction !== 'vertical') {
+      throw new Error('"direction" can be only "horizontal" or "vertical".')
+    }
+    interpolations.forEach((interpolation, index) => {
+      const { interpolationName, interpolated, scope } = performInterpolation({
+        interpolation,
+        id: index,
+        value: direction === 'horizontal' ? scrollLeft : scrollTop
+      })
+      setCSSProperty(interpolationName, interpolated, scope)
+    })
+  }
 }
 
 const reportScroll = ({ direction, name, interpolations }) => (event) => {
@@ -45,32 +62,16 @@ const reportScroll = ({ direction, name, interpolations }) => (event) => {
   setCSSProperty(name, absoluteScroll)
   setCSSProperty(`${name}-1`, absoluteScroll / (targetScrollSize - targetSize))
 
-  if (!interpolations) {
-    return
-  }
-
-  interpolations.forEach((interpolation, interpolationIndex) => {
-    const {
-      name: interpolationName,
-      scope,
-      inputRange,
-      outputRange,
-      cache = true,
-      cacheDuration = 300
-    } = interpolation
-    const [cachedInputRange, cachedOutputRane] = cache
-      ? cacheRanges(`${interpolationName}-${interpolationIndex}`, [inputRange, outputRange], cacheDuration)
-      : [
-        typeof inputRange === 'function' ? inputRange() : inputRange,
-        typeof outputRange === 'function' ? outputRange() : outputRange,
-      ]
-    const interpolated = interpolate({
-      value: absoluteScroll,
-      inputRange: cachedInputRange,
-      outputRange: cachedOutputRane
+  if (interpolations) {
+    interpolations.forEach((interpolation, index) => {
+      const { interpolationName, interpolated, scope } = performInterpolation({
+        interpolation,
+        id: index,
+        value: absoluteScroll
+      })
+      setCSSProperty(interpolationName, interpolated, scope)
     })
-    setCSSProperty(interpolationName, interpolated, scope)
-  })
+  }
 }
 
 const reportVariable = (name, value, scope) => {
@@ -101,12 +102,23 @@ const reportGlobals = ({ scroll, cursor } = { scroll: true, cursor: true }) => {
     reportPageCursor({ x: 0, y: 0 })
   }
   if (scroll) {
-    window.addEventListener('scroll', reportPageScroll)
+    let interpolations = scroll.interpolations
+    let direction = scroll.direction
+    window.addEventListener('scroll', reportPageScroll({
+      direction,
+      interpolations
+    }))
     window.addEventListener('resize', (e) => {
       purgeRangeCache()
-      reportPageScroll(e)
+      reportPageScroll({
+        direction,
+        interpolations
+      })(e)
     })
-    reportPageScroll()
+    reportPageScroll({
+      direction,
+      interpolations
+    })()
   }
 }
 
