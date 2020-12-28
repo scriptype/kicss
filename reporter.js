@@ -95,7 +95,46 @@ const reportIndex = (selector, {
   })
 }
 
-const reportGlobals = ({ scroll, cursor } = { scroll: true, cursor: true }) => {
+const reportTimestamp = ({ type } = { type: 'milliseconds' }) => {
+  const interval = (
+    type === 'hours' ? 1000 * 60 * 60 :
+    type === 'minutes' ? 1000 * 60 :
+    type === 'seconds' ? 1000 : 1
+  )
+
+  const report = (name, interval, repeat) => {
+    const now = Date.now()
+    setCSSProperty(name, Math.floor((now - startTime) / interval))
+  }
+
+  if (type === 'milliseconds') {
+    requestAnimationFrame(() => {
+      report('--timestamp', interval)
+      reportTimestamp({ type: 'milliseconds' })
+    })
+  } else {
+    report(`--timestamp-${type}`, interval)
+    setInterval(() => report(`--timestamp-${type}`, interval), interval)
+  }
+}
+
+const reportGlobals = ({
+  scroll,
+  cursor,
+  timestampHours,
+  timestampMinutes,
+  timestampSeconds,
+  timestampMilliSeconds,
+  timestamp,
+} = {
+  scroll: true,
+  cursor: true,
+  timestampHours: false,
+  timestampMinutes: false,
+  timestampSeconds: false,
+  timestampMilliSeconds: false,
+  timestamp: false
+}) => {
   if (cursor) {
     window.addEventListener('mousemove', reportPageCursor)
     reportPageCursor({ x: 0, y: 0 })
@@ -108,7 +147,34 @@ const reportGlobals = ({ scroll, cursor } = { scroll: true, cursor: true }) => {
     })
     reportPageScroll()
   }
+  if (timestampHours) {
+    reportTimestamp({
+      type: 'hours'
+    })
+  }
+  if (timestampMinutes) {
+    reportTimestamp({
+      type: 'minutes'
+    })
+  }
+  if (timestampSeconds) {
+    reportTimestamp({
+      type: 'seconds'
+    })
+  }
+  if (timestampMilliSeconds) {
+    reportTimestamp({
+      type: 'milliseconds'
+    })
+  }
+  if (timestamp) {
+    reportTimestamp({
+      type: 'milliseconds'
+    })
+  }
 }
+
+const startTime = Date.now()
 
 const queryParameters = getScriptParameters('reporter.js')
 if (queryParameters && queryParameters.report) {
@@ -120,5 +186,6 @@ export {
   reportScroll,
   reportVariable,
   reportIndex,
+  reportTimestamp,
   reportGlobals
 }
