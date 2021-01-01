@@ -1,5 +1,5 @@
 import { performInterpolation, purgeRangeCache } from './lib/interpolation.js'
-import { getScriptParameters } from './lib/helpers.js'
+import { getCurrentScript, getScriptParameters } from './lib/helpers.js'
 
 const setCSSProperty = (key, value, element = window.document.documentElement) => {
   element.style.setProperty(key, value)
@@ -122,10 +122,19 @@ const reportGlobals = ({ scroll, cursor } = { scroll: true, cursor: true }) => {
   }
 }
 
-const queryParameters = getScriptParameters('reporter.js')
-if (queryParameters && queryParameters.report) {
-  const globalsToReport = queryParameters.report
-  reportGlobals(globalsToReport)
+const currentScript = getCurrentScript('reporter.js')
+if (currentScript) {
+  const queryParameters = getScriptParameters(currentScript)
+  if (queryParameters && queryParameters.report) {
+    const globalsToReport = queryParameters.report
+    reportGlobals(globalsToReport)
+  }
+  window.Reporter = {
+    reportScroll,
+    reportVariable,
+    reportIndex,
+    reportGlobals
+  }
 }
 
 export {
