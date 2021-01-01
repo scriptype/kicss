@@ -6,6 +6,7 @@
         <title>CSS custom variables experiments</title>
         <link rel="icon" type="image/png" href="favicon.png" />
         <link rel="stylesheet" href="common.css" />
+        <link rel="stylesheet" href="docs.css" />
     </head>
 
     <body>
@@ -15,21 +16,138 @@
             </header>
 
             <main class="content">
-                <h2>Examples</h2>
-                <ul>
-                    <li><a href="examples/camera">Camera</a></li>
-                    <li><a href="examples/doodle-1">Doodle 1</a></li>
-                    <li><a href="examples/doodle-2">Doodle 2</a></li>
-                    <li><a href="examples/carousel-horizontal">Carousel Horizontal</a></li>
-                    <li><a href="examples/parallax-cursor">Parallax Cursor</a></li>
-                    <li><a href="examples/parallax-scroll">Parallax Scroll</a></li>
-                    <li><a href="examples/progressbar">Progress Bar</a></li>
-                    <li><a href="examples/scroll-content">Scroll Content</a></li>
-                    <li><a href="examples/staggered-animation">Staggered Animation</a></li>
-                    <li><a href="examples/preserved-contrast">Preserved Contrast</a></li>
-                </ul>
+                <section class="topic">
+                    <h2>Examples</h2>
+                    <ul>
+                        <li><a href="examples/camera">Camera</a></li>
+                        <li><a href="examples/doodle-1">Doodle 1</a></li>
+                        <li><a href="examples/doodle-2">Doodle 2</a></li>
+                        <li><a href="examples/carousel-horizontal">Carousel Horizontal</a></li>
+                        <li><a href="examples/parallax-cursor">Parallax Cursor</a></li>
+                        <li><a href="examples/parallax-scroll">Parallax Scroll</a></li>
+                        <li><a href="examples/progressbar">Progress Bar</a></li>
+                        <li><a href="examples/scroll-content">Scroll Content</a></li>
+                        <li><a href="examples/staggered-animation">Staggered Animation</a></li>
+                        <li><a href="examples/preserved-contrast">Preserved Contrast</a></li>
+                    </ul>
+                </section>
+
+                <section class="topic">
+                    <h2>Usage</h2>
+
+                    <section class="sub-topic">
+                        <h3>Option 1: Include the script in HTML:</h3>
+                        <pre>&lt;script type="module" src="reporter.js"&gt;&lt;/script&gt;</pre>
+                        <p>If you want Reporter to report some page-level (global)
+                        properties, you can still achieve it by asking it from
+                        Reporter this way:</p>
+                        <pre>&lt;script type="module" src="reporter.js?report=cursor,scroll"&gt;&lt;/script&gt;</pre>
+                        <p>Available global properties to ask: <code>cursor</code>, <code>scroll</code>.</p>
+                        <p>If you use Reporter this way, then you can access it from
+                        the global window object.</p>
+                        <p>An example of using Reporter that way would be:</p>
+                        <pre>window.Reporter.reportVariable('--kele', 3)</pre>
+                    </section>
+
+                    <section class="sub-topic">
+                        <h3>Option 2: Import as module</h3>
+                        <pre>
+import { reportVariable, reportGlobals } from 'reporter'
+
+reportGlobals({
+    cursor: true,
+    scroll: true
+})
+
+reportVariable('--gret', 4)</pre>
+                    </section>
+                </section>
+
+                <section class="topic">
+                    <h2>API</h2>
+
+                    <section class="sub-topic">
+                        <h3>reportScroll(options)</h3>
+                        <p>Will report scroll values. Should be used as the scroll event handler on the element.</p>
+                        <p>options:</p>
+                        <ul>
+                            <li>direction: 'horizontal' | 'vertical'</li>
+                            <li>name: string</li>
+                            <li>interpolations?: Interpolation[]</li>
+                        </ul>
+                        <p>Usage examples:
+                        <a href="examples/carousel-horizontal">Carousel Horizontal</a>,
+                        <a href="examples/scroll-content">Scroll Content</a></p>
+                    </section>
+
+                    <section class="sub-topic">
+                        <h3>reportVariable(name, value, scope)</h3>
+                        <p>Will assign a css property to an element if scope is present, otherwise to :root</p>
+                        <p>Parameters:</p>
+                        <ul>
+                            <li>name: string</li>
+                            <li>value: any</li>
+                            <li>scope?: DOMNode (default: documentElement)</li>
+                        </ul>
+                        <p>Usage examples:
+                        <a href="examples/carousel-horizontal">Carousel Horizontal</a>,
+                        <a href="examples/scroll-content">Scroll Content</a>
+                        <a href="examples/staggered-animation">Staggered Animation</a></p>
+                    </section>
+
+                    <section class="sub-topic">
+                        <h3>reportIndex(selector, options)</h3>
+                        <p>Will run the query for the given selector, and assign an index css property to each item. If the 'rowIndexBy' option is present, a row index will be also assigned.</p>
+                        <p>Parameters:</p>
+                        <ul>
+                            <li>selector: string</li>
+                            <li>options: shape:
+                                <ul>
+                                    <li>indexVariableName?: string (default: '--index')</li>
+                                    <li>rowIndexVariableName?: string (default: '--row-index')</li>
+                                    <li>rowIndexBy?: number</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <p>Usage examples:
+                        <a href="examples/doodle-1">Doodle 1</a>,
+                        <a href="examples/doodle-2">Doodle 2</a>
+                        <a href="examples/staggered-animation">Staggered Animation</a></p>
+                    </section>
+
+                    <section class="sub-topic">
+                        <h3>reportGlobals(options)</h3>
+                        <p>Will report global properties.</p>
+                        <p>options?: (default: { scroll: true, cursor: true })</p>
+                        <ul>
+                            <li>scroll?: boolean (default: true)</li>
+                            <li>cursor?: boolean (default: true)</li>
+                        </ul>
+                        <p>Usage examples:
+                        <a href="examples/doodle-1">Doodle 1</a>,
+                        <a href="examples/doodle-2">Doodle 2</a>
+                        <a href="examples/preserved-contrast">Preserved Contrast</a></p>
+                    </section>
+                </section>
+
+                <section class="topic">
+                    <h2>Types</h2>
+
+                    <section class="sub-topic">
+                        <h3>Interpolation</h3>
+                        <ul>
+                            <li>name: string</li>
+                            <li>inputRange: number[]</li>
+                            <li>outputRange: number[]</li>
+                            <li>scope?: DOMNode (default: documentElement)</li>
+                            <li>cache?: boolean (default: true)</li>
+                            <li>cacheDuration?: number (milliseconds) (default:  300)</li>
+                        </ul>
+                    </section>
+                </section>
             </main>
         </div>
+        <script src="docs.js"></script>
     </body>
 
 </html>
