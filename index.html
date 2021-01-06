@@ -54,14 +54,21 @@
                     <section class="sub-topic">
                         <h3>Option 2: Import as module</h3>
                         <pre>
-import { reportVariable, reportGlobals } from 'reporter'
+import { reportGlobals, reportVariable, reportScroll } from 'reporter'
 
 reportGlobals({
     cursor: true,
     scroll: true
 })
 
-reportVariable('--gret', 4)</pre>
+reportVariable('--gret', 4)
+
+const container = document.getElementById('container')
+
+container.addEventListener('scroll', reportScroll({
+    direction: 'horizontal',
+    name: '--container-scroll'
+}))</pre>
                     </section>
                 </section>
 
