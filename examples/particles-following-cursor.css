@@ -1,0 +1,18 @@
+body {
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: calc(1 - var(--index));
+    font-size: calc(2em - var(--index) * 0.1em);
+    transform: translate(
+        calc( -50% + var(--cursor-x) ),
+        calc( -50% + var(--cursor-y) )
+    );
+    transition: transform 100ms;
+    transition-delay: calc(1ms * var(--index));
+    will-change: transform;
+}
