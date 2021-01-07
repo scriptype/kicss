@@ -6,7 +6,10 @@ for (let i = 0; i < 60; i++) {
 }
 
 const rowLength = 20
-reportVariable('--row-length', rowLength, content)
+reportVariable('--row-length', {
+  value: rowLength,
+  scope: content
+})
 reportIndex('.item', {
   rowIndexBy: rowLength
 })

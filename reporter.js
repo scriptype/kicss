@@ -1,8 +1,15 @@
 import { performInterpolation, purgeRangeCache } from './lib/interpolation.js'
 import { getCurrentScript, getScriptParameters } from './lib/helpers.js'
+import validations from './lib/validations.js'
 
 const setCSSProperty = (key, value, element = window.document.documentElement) => {
   element.style.setProperty(key, value)
+}
+
+const reportResponsiveVariable = (name, valueFn, scope) => {
+  window.addEventListener('resize', () => setCSSProperty(name, valueFn(), scope))
+  window.addEventListener('orientationchange', () => setCSSProperty(name, valueFn(), scope))
+  setCSSProperty(name, valueFn(), scope)
 }
 
 const reportPageCursor = ({ x, y }) => {
@@ -74,8 +81,36 @@ const reportScroll = ({ direction, name, interpolations }) => (event) => {
   }
 }
 
-const reportVariable = (name, value, scope) => {
-  setCSSProperty(name, value, scope)
+const reportVariable = (...args) => {
+  validations.reportVariable(...args)
+  let name
+  let value
+  let scope
+  if (typeof args[0] === 'string') {
+    name = args[0]
+    if (typeof args[1] === 'function') {
+      return reportResponsiveVariable(name, args[1])
+    }
+    if (typeof args[1] === 'object') {
+      scope = args[1].scope
+      value = args[1].value
+      if (typeof args[1].value === 'function') {
+        return reportResponsiveVariable(name, args[1].value, scope)
+      }
+    } else {
+      value = args[1]
+    }
+    setCSSProperty(name, value, scope)
+
+  } else if (typeof args[0] === 'object') {
+    name = args[0].name
+    value = args[0].value
+    scope = args[0].scope
+    if (typeof value === 'function') {
+      return reportResponsiveVariable(name, value, scope)
+    }
+    setCSSProperty(name, value, scope)
+  }
 }
 
 const reportIndex = (selector, {

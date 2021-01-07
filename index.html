@@ -91,18 +91,25 @@ container.addEventListener('scroll', reportScroll({
                     </section>
 
                     <section class="sub-topic">
-                        <h3>reportVariable(name, value, scope)</h3>
+                        <h3>reportVariable(name, value | options)</h3>
                         <p>Will assign a css property to an element if scope is present, otherwise to :root</p>
+                        <p>If value is provided as a function, then it will be treated as a responsive variable and refreshed if window dimensions change.</p>
                         <p>Parameters:</p>
                         <ul>
                             <li>name: string</li>
-                            <li>value: any</li>
-                            <li>scope?: DOMNode (default: documentElement)</li>
+                            <li>value: function | any</li>
+                            <li>options: shape:
+                                <ul>
+                                    <li>value: function | any</li>
+                                    <li>scope?: DOMNode (default: documentElement)</li>
+                                </ul>
+                            </li>
                         </ul>
                         <p>Usage examples:
                         <a href="examples/carousel-horizontal">Carousel Horizontal</a>,
                         <a href="examples/scroll-content">Scroll Content</a>
-                        <a href="examples/staggered-animation">Staggered Animation</a></p>
+                        <a href="examples/staggered-animation">Staggered Animation</a>
+                        <a href="examples/progresscar">Progress Car</a></p>
                     </section>
 
                     <section class="sub-topic">
