@@ -23,6 +23,8 @@ const reportPageCursor = ({ x, y }) => {
 }
 
 const reportPageScroll = ({ direction, interpolations }) => () => {
+  validations.reportPageScroll({ direction, interpolations })
+
   const { scrollTop, scrollLeft } = document.documentElement
   setCSSProperty('--scroll-x', scrollLeft)
   setCSSProperty('--scroll-y', scrollTop)
@@ -33,12 +35,6 @@ const reportPageScroll = ({ direction, interpolations }) => () => {
   setCSSProperty('--scroll-y-1', scrollTop / (scrollHeight - innerHeight))
 
   if (interpolations) {
-    if (!direction) {
-      throw new Error('"direction" must be provided for interpolations')
-    }
-    if (direction !== 'horizontal' && direction !== 'vertical') {
-      throw new Error('"direction" can be only "horizontal" or "vertical".')
-    }
     interpolations.forEach((interpolation, index) => {
       const { interpolationName, interpolated, scope } = performInterpolation({
         interpolation,
@@ -51,6 +47,8 @@ const reportPageScroll = ({ direction, interpolations }) => () => {
 }
 
 const reportScroll = ({ direction, name, interpolations }) => (event) => {
+  validations.reportScroll({ direction, name, interpolations })
+
   const { target } = event
   let absoluteScroll
   let targetScrollSize
@@ -63,8 +61,6 @@ const reportScroll = ({ direction, name, interpolations }) => (event) => {
     absoluteScroll = target.scrollTop
     targetScrollSize = target.scrollHeight
     targetSize = target.clientHeight
-  } else {
-    throw new Error('"direction" can be only "horizontal" or "vertical".')
   }
   setCSSProperty(name, absoluteScroll)
   setCSSProperty(`${name}-1`, absoluteScroll / (targetScrollSize - targetSize))
