@@ -1,0 +1,62 @@
+.items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-gap: 20px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.add-item {
+    height: 400px;
+    order: 1;
+    padding: 0 32px;
+    font: inherit;
+    font-size: 3em;
+    font-weight: 100;
+    letter-spacing: -3.8px;
+}
+
+.item {
+    height: 400px;
+    position: relative;
+    margin: 0;
+}
+
+.item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.spinner-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 64px;
+    height: 64px;
+}
+
+.spinner {
+    --progress: 0;
+    display: inline-block;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, .5);
+    animation: spin 2s linear infinite;
+}
+
+.spinner-line {
+    fill: transparent;
+    stroke: white;
+    stroke-dasharray: 176px;
+    stroke-dashoffset: calc(170px - (var(--progress) * 170px));
+    stroke-linecap: round;
+    stroke-width: 4px;
+    transition: stroke-dashoffset calc(var(--progress-transition) * 1ms);
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(1turn);
+    }
+}
