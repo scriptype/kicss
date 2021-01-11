@@ -1,5 +1,15 @@
 import { reportVariable } from '../reporter.js'
 
+const items = document.querySelector('.items')
+const addBtn = document.querySelector('.add-item')
+const template = document.querySelector('#item')
+const progressTransitionInMS = 500
+
+reportVariable('--progress-transition', {
+  value: progressTransitionInMS,
+  scope: items
+})
+
 const images = [
   'assets/alexey-turenkov-KZGTISDiuBw-unsplash.jpg',
   'assets/alin-agustin-OhejSRo7k9Y-unsplash.jpg',
@@ -10,13 +20,12 @@ const images = [
 
 const randomFrom = (array) => array[Math.floor(Math.random() * array.length)]
 
-const startRandomProgress = (initial, callback) => {
-  let progress = initial
+const startRandomProgress = (progress, callback) => {
   callback(progress)
   setTimeout(() => {
     const remaining = 1 - progress
     if (remaining < 0.1) {
-      callback(progress + remaining)
+      callback(1)
     } else {
       const step = (remaining / 2) * Math.random()
       startRandomProgress(progress + step, callback)
@@ -24,21 +33,14 @@ const startRandomProgress = (initial, callback) => {
   }, Math.random() * 1000)
 }
 
-const items = document.querySelector('.items')
-const addBtn = document.querySelector('.add-item')
-const progressTransitionInMS = 500
-reportVariable('--progress-transition', {
-  value: progressTransitionInMS,
-  scope: items
-})
-
-const loadNewItem = () => {
-  const randomImageSrc = randomFrom(images)
-  const clonedItem = document.querySelector('#item').content.cloneNode(true)
+const createNewItem = () => {
+  const clonedItem = template.content.cloneNode(true)
   const item = clonedItem.querySelector('.item')
-  const image = item.querySelector('img')
-  const spinner = item.querySelector('.spinner')
-  image.src = randomImageSrc
+  item.querySelector('img').src = randomFrom(images)
+  return item
+}
+
+const animateSpinner = (spinner) => {
   startRandomProgress(0, progress => {
     reportVariable('--progress', {
       value: progress,
@@ -48,8 +50,14 @@ const loadNewItem = () => {
       setTimeout(() => spinner.remove(), progressTransitionInMS)
     }
   })
-  items.appendChild(item)
 }
 
-loadNewItem()
-addBtn.addEventListener('click', loadNewItem)
+const addNewItem = () => {
+  const item = createNewItem()
+  const spinner = item.querySelector('.spinner')
+  items.appendChild(item)
+  animateSpinner(spinner)
+}
+
+addNewItem()
+addBtn.addEventListener('click', addNewItem)
