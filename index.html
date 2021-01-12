@@ -79,13 +79,19 @@ container.addEventListener('scroll', reportScroll({
                     <h2>API</h2>
 
                     <section class="sub-topic">
-                        <h3>reportScroll(options)</h3>
+                        <h3>reportScroll(name | options, direction | options)</h3>
                         <p>Will report scroll values. Should be used as the scroll event handler on the element.</p>
-                        <p>options:</p>
+                        <p>Parameters:</p>
                         <ul>
-                            <li>direction: 'horizontal' | 'vertical'</li>
                             <li>name: string</li>
-                            <li>interpolations?: Interpolation[]</li>
+                            <li>direction: 'horizontal' | 'vertical'</li>
+                            <li>options:
+                                <ul>
+                                    <li>name: string</li>
+                                    <li>direction: 'horizontal' | 'vertical'</li>
+                                    <li>interpolations?: Interpolation[]</li>
+                                </ul>
+                            </li>
                         </ul>
                         <p>Usage examples:
                         <a href="examples/carousel-horizontal">Carousel Horizontal</a>,

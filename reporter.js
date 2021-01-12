@@ -46,8 +46,27 @@ const reportPageScroll = ({ direction, interpolations }) => () => {
   }
 }
 
-const reportScroll = ({ direction, name, interpolations }) => (event) => {
-  validations.reportScroll({ direction, name, interpolations })
+const reportScroll = (...args) => (event) => {
+  validations.reportScroll(...args)
+
+  let name
+  let direction = 'vertical'
+  let interpolations
+  if (typeof args[0] === 'string') {
+    name = args[0]
+
+    if (typeof args[1] === 'string') {
+      direction = args[1]
+    } else if (typeof args[1] === 'object') {
+      direction = args[1].direction || direction
+      interpolations = args[1].interpolations
+    }
+
+  } else if (typeof args[0] === 'object') {
+    name = args[0].name
+    direction = args[0].direction
+    interpolations = args[0].interpolations
+  }
 
   const { target } = event
   let absoluteScroll

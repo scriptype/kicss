@@ -12,9 +12,7 @@ tabs.forEach((tab, index) => {
 reportVariable('--tabline-position', tabs[0].offsetTop - tabs[0].offsetHeight / 2)
 
 const slider = document.querySelector('.content')
-slider.addEventListener('scroll', reportScroll({
-  direction: 'vertical',
-  name: '--slider-scroll',
+slider.addEventListener('scroll', reportScroll('--slider-scroll', {
   interpolations: [
     {
       name: '--tabline-position',
