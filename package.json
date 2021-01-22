@@ -1,0 +1,28 @@
+{
+  "name": "kicss",
+  "version": "0.1.0",
+  "description": "A small JavaScript library that can help you with keeping the UI logic code decoupled from the CSS code, while making it very easy to create components with nice, real-time animations.",
+  "main": "reporter.js",
+  "directories": {
+    "example": "examples",
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scriptype/custom-vars-experiments.git"
+  },
+  "keywords": [
+    "css",
+    "css3",
+    "ui"
+  ],
+  "author": "M. Enes Ertarhanaci",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/scriptype/custom-vars-experiments/issues"
+  },
+  "homepage": "https://github.com/scriptype/custom-vars-experiments#readme"
+}
