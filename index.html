@@ -18,19 +18,30 @@
             <main class="content">
                 <section class="topic">
                     <h2>What is KICSS?</h2>
-                    <p><abbr title="Keep It CSS">KICSS</abbr> is a technique for keeping the UI logic code decoupled from the CSS code. It also refers to a small JavaScript library that can help you achieving that goal.</p>
-                    <p>KICSS stands for "Keep It CSS". Naming is inspired by the famous programming motto <abbr title="Keep it simple, stupid">KISS</abbr>.</p>
-                    <p>When followed, this approach should help you to replace much of your dynamically-generated CSS code with static, pure CSS that can deliver the same dynamic styling needs.</p>
-                    <p>If you (optionally) use the JavaScript library, you can interpolate dynamic values and create components with nice, real-time animations.</p>
+                    <p><abbr title="Keep It CSS">KICSS</abbr> is a technique for creating dynamically-styled UI components that provide real-time feedback and animations. The goal is to establish an idiomatic and predictable way of empowering UI elements with interactivity, while focusing on keeping the behavior-concerned code separated from style-concerned code. Or, better put, establishing a bridge between these two concerns.</p>
+                    <p>Utilizing the power of CSS custom properties lies at the heart of this technique.</p>
+                    <p>It's also the name of a small JavaScript library that can help you achieve that goal.</p>
+                    <p>KICSS stands for "Keep It CSS". Naming is inspired by the famous programming motto <abbr title="Keep it simple, stupid">KISS</abbr>. "It" in the name refers only to style-concerned code.</p>
                 </section>
 
                 <section class="topic">
-                    <h2>What's "UI logic code"?</h2>
-                    <p>In abstract terms, it is the JavaScript or pre-processor code that acts like a controller for the final CSS output. In reality, this corresponds to any piece of code that results in dynamically generating some CSS on-the-fly. It tends to rely on at least one runtime value.</p>
-                    <p><strong>Note:</strong> For the sake of brevity, in this section, we are not interested in a broader definition of "UI logic code" that might cover more than just generating dynamic CSS.</p>
-                    <h3>Example 1</h3>
-                    <p>The scroll event handler in this example is a UI logic code. It generates a certain CSS output, based on a real-time value (<code>scrollTop</code>).</p>
+                    <h2>Why?</h2>
+                    <p>If followed, this approach should help you replacing much of your dynamically-generated CSS code with static, pure CSS that can deliver the same dynamic styling needs. This doesn't mean you have to leave your existing setup behind and go pure CSS. It's just a mental guideline for creating dynamic UI elements. Whether you use a CSS-in-JS tech or CSS Modules or a pre-processor language is irrelevant. However, it may reduce your need for these tools.</p>
+                    <p>If you (optionally) use the JavaScript library, you can easily interpolate dynamic values and create components with nice, real-time animations.</p>
+                </section>
+
+                <section class="topic">
+                    <h2>Here's what this is all about</h2>
+                    <p>Why don't we use CSS custom properties to communicate the interactivity needs of our UI to our CSS code so that we can implement a greater portion of interactivity right in the CSS? This would allow us to take more advantage of built-in CSS features such as hardware accelarated transitions and animations, snappy smooth scroll, HSL color scheme and many more.</p>
+                    <p>Please check the examples below to understand the idea better.</p>
+                </section>
+
+                <section class="topic">
+                    <h2>Example 1</h2>
+                    <p>Here's an example of how one could implement the parallax interactivity.</p>
+                    <h3>Before:</h3>
                     <pre>
+// js
 window.addEventListener('scroll', (event) => {
     const scrollTop = document.document.scrollTop
     parallaxLayer1.style.cssText += 'transform: translateY(${scrollTop / 10}px);'
@@ -38,8 +49,23 @@ window.addEventListener('scroll', (event) => {
     parallaxLayer3.style.cssText += 'transform: translateY(${scrollTop / 2}px);'
 })
 </pre>
+                    <h3>After:</h3>
+                    <pre>
+// js
+kicss.reportGlobals({ scroll: true })
+kicss.reportIndex('.parallax-layer', { start: 1 })
 
-                    <h3>Example 2</h3>
+/* css */
+.parallax-layer {
+    --parallax-amount: calc( var(--scroll-y) / (10 / var(--index)) );
+    transform: translateY(var(--parallax-amount));
+    will-change: transform;
+}
+</pre>
+                </section>
+
+                <section class="topic">
+                    <h2>Example 2</h2>
                     <p>The for loop in this SCSS code can be used to specify a dynamic <code>width</code> for each <code>.item</code> based on its order in the parent element. It generates 10 CSS rules when compiled.</p>
                     <pre>
 @for $i from 1 through 10 {
