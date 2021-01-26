@@ -37,6 +37,113 @@
                 </section>
 
                 <section class="topic">
+                    <h2>Example 1: Re-using variables between JS and CSS</h2>
+                    <h3>Old way 1</h3>
+                    <p>JS would have full control and be concerned with the presentational code.</p>
+                    <pre>
+// js
+const items = ['a', 'b', 'c']
+document.querySelector('.container').style.cssText += `width: ${100 / items.length}px`
+                    </pre>
+                    <h4>Problems:</h4>
+                    <ul>
+                        <li>Violates the separation of concerns principle by being aware of the exact implementation of presentation.</li>
+                        <li>Will most likely result in fragmentation in styling. Some styling code will be found in JS, while others will be written in CSS.</li>
+                        <li>As a result, reasoning about CSS will be harder. Changing one thing may break others without giving a clue why.</li>
+                        <li>Will cause specifity issues.</li>
+                    </ul>
+
+                    <h3>Old way 2</h3>
+                    <p>A hardcoded value would be reflected to SCSS manually.</p>
+                    <pre>
+// js
+const items = ['a', 'b', 'c']
+const itemCount = items.length
+
+// scss
+$itemCount = 3;
+
+.container {
+    width: 100px / $itemCount;
+}
+                    </pre>
+                    <h4>Problems:</h4>
+                    <ul>
+                        <li>A dynamic change in the <code>items</code> couldn't be reflected to stylesheet, at all.</li>
+                        <li>Requires using a CSS pre-processor.</li>
+                        <li>Requires manual synchronization with JS code.</li>
+                    </ul>
+
+                    <h3>KICSS way (using CSS custom properties)</h3>
+                    <p>Using this method, we can dynamically keep the variable value up-to-date during runtime. JS is free of any implementation details of presentation-concerned code.</p>
+                    <pre>
+// js
+const items = ['a', 'b', 'c']
+document.documentElement.style.setProperty('--item-count', items.length)
+// OR: kicss.reportVariable('--item-count', items.length)
+
+/* css */
+.container {
+    width: calc(100px / var(--item-count));
+}
+                    </pre>
+                    <h4>Problems:</h4>
+                    <ul>
+                        <li>Won't work in IE11.</li>
+                    </ul>
+                </section>
+
+                <section class="topic">
+                    <h2>Example 2: Iterating in child elements to dynamically adjust styling for each child element</h2>
+                    <p>When a number of child elements in a parent need slightly different styling from each other, there are also different ways to achieve it.</p>
+                    <h3>Old way 1</h3>
+                    <pre>
+// js
+items.forEach((item, index) => {
+    item.style.cssText += `width: ${(index + 1) * 50}px`
+})
+</pre>
+
+                    <h3>Old way 2</h3>
+                    <pre>
+// js
+items.length // 3
+
+// scss
+$itemCount = 3
+@for $i from 1 through $itemCount {
+    .item:nth-child(#{$i}) {
+        width: 50px * $i;
+    }
+}
+</pre>
+
+                    <h3>KICSS way (Using CSS custom properties)</h3>
+                    <pre>
+// js
+items.forEach((item, index) => {
+    item.style.setProperty('--index', index + 1)
+})
+
+// css
+.item {
+    width: calc(50px * var(--index));
+}
+</pre>
+
+                    <h3>KICSS way (Using kicss.js)</h3>
+                    <pre>
+// js
+kicss.reportIndex('.item', { start: 1 })
+
+// css
+.item {
+    width: calc(50px * var(--index));
+}
+</pre>
+                </section>
+
+                <section class="topic">
                     <h2>Example 1</h2>
                     <p>Here's an example of how one could implement the parallax interactivity.</p>
                     <h3>Before:</h3>
