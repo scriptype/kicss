@@ -5,188 +5,30 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>CSS custom variables experiments</title>
         <link rel="icon" type="image/png" href="favicon.png" />
-        <link rel="stylesheet" href="common.css" />
         <link rel="stylesheet" href="docs.css" />
     </head>
 
     <body>
         <div class="container">
             <header class="heading">
-                <h1>KICSS</h1>
+                <h1>Keep It CSS</h1>
             </header>
 
             <main class="content">
                 <section class="topic">
-                    <h2>What is KICSS?</h2>
-                    <p><abbr title="Keep It CSS">KICSS</abbr> is a technique for creating dynamically-styled UI components that provide real-time feedback and animations. The goal is to establish an idiomatic and predictable way of empowering UI elements with interactivity, while focusing on keeping the behavior-concerned code separated from style-concerned code. Or, better put, establishing a bridge between these two concerns.</p>
-                    <p>Utilizing the power of CSS custom properties lies at the heart of this technique.</p>
-                    <p>It's also the name of a small JavaScript library that can help you achieve that goal.</p>
-                    <p>KICSS stands for "Keep It CSS". Naming is inspired by the famous programming motto <abbr title="Keep it simple, stupid">KISS</abbr>. "It" in the name refers only to style-concerned code.</p>
-                </section>
-
-                <section class="topic">
-                    <h2>Why?</h2>
-                    <p>If followed, this approach should help you replacing much of your dynamically-generated CSS code with static, pure CSS that can deliver the same dynamic styling needs. This doesn't mean you have to leave your existing setup behind and go pure CSS. It's just a mental guideline for creating dynamic UI elements. Whether you use a CSS-in-JS tech or CSS Modules or a pre-processor language is irrelevant. However, it may reduce your need for these tools.</p>
-                    <p>If you (optionally) use the JavaScript library, you can easily interpolate dynamic values and create components with nice, real-time animations.</p>
-                </section>
-
-                <section class="topic">
-                    <h2>Here's what this is all about</h2>
+                    <h2>What?</h2>
                     <p>Why don't we use CSS custom properties to communicate the interactivity needs of our UI to our CSS code so that we can implement a greater portion of interactivity right in the CSS? This would allow us to take more advantage of built-in CSS features such as hardware accelarated transitions and animations, snappy smooth scroll, HSL color scheme and many more.</p>
+                    <p>KICSS stands for "Keep It CSS". Naming is inspired by the famous programming motto <abbr title="Keep it simple, stupid">KISS</abbr>. "It" in the name refers only to style-concerned code.</p>
+                    <p>It's also the name of a small JavaScript library that can help you achieve that goal.</p>
                     <p>Please check the examples below to understand the idea better.</p>
                 </section>
 
                 <section class="topic">
-                    <h2>Example 1: Re-using variables between JS and CSS</h2>
-                    <h3>Old way 1</h3>
-                    <p>JS would have full control and be concerned with the presentational code.</p>
-                    <pre>
-// js
-const items = ['a', 'b', 'c']
-document.querySelector('.container').style.cssText += `width: ${100 / items.length}px`
-                    </pre>
-                    <h4>Problems:</h4>
-                    <ul>
-                        <li>Violates the separation of concerns principle by being aware of the exact implementation of presentation.</li>
-                        <li>Will most likely result in fragmentation in styling. Some styling code will be found in JS, while others will be written in CSS.</li>
-                        <li>As a result, reasoning about CSS will be harder. Changing one thing may break others without giving a clue why.</li>
-                        <li>Will cause specifity issues.</li>
-                    </ul>
-
-                    <h3>Old way 2</h3>
-                    <p>A hardcoded value would be reflected to SCSS manually.</p>
-                    <pre>
-// js
-const items = ['a', 'b', 'c']
-const itemCount = items.length
-
-// scss
-$itemCount = 3;
-
-.container {
-    width: 100px / $itemCount;
-}
-                    </pre>
-                    <h4>Problems:</h4>
-                    <ul>
-                        <li>A dynamic change in the <code>items</code> couldn't be reflected to stylesheet, at all.</li>
-                        <li>Requires using a CSS pre-processor.</li>
-                        <li>Requires manual synchronization with JS code.</li>
-                    </ul>
-
-                    <h3>KICSS way (using CSS custom properties)</h3>
-                    <p>Using this method, we can dynamically keep the variable value up-to-date during runtime. JS is free of any implementation details of presentation-concerned code.</p>
-                    <pre>
-// js
-const items = ['a', 'b', 'c']
-document.documentElement.style.setProperty('--item-count', items.length)
-// OR: kicss.reportVariable('--item-count', items.length)
-
-/* css */
-.container {
-    width: calc(100px / var(--item-count));
-}
-                    </pre>
-                    <h4>Problems:</h4>
-                    <ul>
-                        <li>Won't work in IE11.</li>
-                    </ul>
+                    <h2>Why?</h2>
+                    <p>If followed, this approach should help you replacing much of your dynamically-generated CSS code with static, pure CSS that can deliver the same dynamic styling needs. It's just a mental guideline for creating dynamic UI elements. Whether you use a CSS-in-JS tech or CSS Modules or a pre-processor language is irrelevant. However, it may reduce your need for these tools.</p>
+                    <p>If you (optionally) use the JavaScript library, you can easily interpolate dynamic values and create components with nice, real-time animations.</p>
                 </section>
 
-                <section class="topic">
-                    <h2>Example 2: Iterating in child elements to dynamically adjust styling for each child element</h2>
-                    <p>When a number of child elements in a parent need slightly different styling from each other, there are also different ways to achieve it.</p>
-                    <h3>Old way 1</h3>
-                    <pre>
-// js
-items.forEach((item, index) => {
-    item.style.cssText += `width: ${(index + 1) * 50}px`
-})
-</pre>
-
-                    <h3>Old way 2</h3>
-                    <pre>
-// js
-items.length // 3
-
-// scss
-$itemCount = 3
-@for $i from 1 through $itemCount {
-    .item:nth-child(#{$i}) {
-        width: 50px * $i;
-    }
-}
-</pre>
-
-                    <h3>KICSS way (Using CSS custom properties)</h3>
-                    <pre>
-// js
-items.forEach((item, index) => {
-    item.style.setProperty('--index', index + 1)
-})
-
-// css
-.item {
-    width: calc(50px * var(--index));
-}
-</pre>
-
-                    <h3>KICSS way (Using kicss.js)</h3>
-                    <pre>
-// js
-kicss.reportIndex('.item', { start: 1 })
-
-// css
-.item {
-    width: calc(50px * var(--index));
-}
-</pre>
-                </section>
-
-                <section class="topic">
-                    <h2>Example 1</h2>
-                    <p>Here's an example of how one could implement the parallax interactivity.</p>
-                    <h3>Before:</h3>
-                    <pre>
-// js
-window.addEventListener('scroll', (event) => {
-    const scrollTop = document.document.scrollTop
-    parallaxLayer1.style.cssText += 'transform: translateY(${scrollTop / 10}px);'
-    parallaxLayer2.style.cssText += 'transform: translateY(${scrollTop / 5}px);'
-    parallaxLayer3.style.cssText += 'transform: translateY(${scrollTop / 2}px);'
-})
-</pre>
-                    <h3>After:</h3>
-                    <pre>
-// js
-kicss.reportGlobals({ scroll: true })
-kicss.reportIndex('.parallax-layer', { start: 1 })
-
-/* css */
-.parallax-layer {
-    --parallax-amount: calc( var(--scroll-y) / (10 / var(--index)) );
-    transform: translateY(var(--parallax-amount));
-    will-change: transform;
-}
-</pre>
-                </section>
-
-                <section class="topic">
-                    <h2>Example 2</h2>
-                    <p>The for loop in this SCSS code can be used to specify a dynamic <code>width</code> for each <code>.item</code> based on its order in the parent element. It generates 10 CSS rules when compiled.</p>
-                    <pre>
-@for $i from 1 through 10 {
-    .item:nth-child(#{$i}) {
-        width: $i * 50px;
-    }
-}
-</pre>
-                </section>
-
-                <section class="topic">
-                    <h2>How to decouple UI logic code from CSS if styling depends on dynamic values?</h2>
-                    <p>Coming soon...</p>
-                </section>
                 <section class="topic">
                     <h2>Examples</h2>
                     <ul>
@@ -213,36 +55,18 @@ kicss.reportIndex('.parallax-layer', { start: 1 })
 
                     <section class="sub-topic">
                         <h3>Option 1: Include the script in HTML:</h3>
-                        <pre>&lt;script type="module" src="reporter.js"&gt;&lt;/script&gt;</pre>
-                        <p>If you want Reporter to report some page-level (global)
-                        properties, you can still achieve it by asking it from
-                        Reporter this way:</p>
-                        <pre>&lt;script type="module" src="reporter.js?report=cursor,scroll"&gt;&lt;/script&gt;</pre>
+                        <p>To access KICSS from global <code>window</code> object:</p>
+                        <pre>&lt;script type="module" src="kicss.js"&gt;&lt;/script&gt;</pre>
+                        <p>Or:</p>
+                        <pre>&lt;script type="module" src="kicss.js?report=cursor,scroll"&gt;&lt;/script&gt;</pre>
                         <p>Available global properties to ask: <code>cursor</code>, <code>scroll</code>.</p>
-                        <p>If you use Reporter this way, then you can access it from
-                        the global window object.</p>
-                        <p>An example of using Reporter that way would be:</p>
-                        <pre>window.Reporter.reportVariable('--kele', 3)</pre>
                     </section>
 
                     <section class="sub-topic">
                         <h3>Option 2: Import as module</h3>
-                        <pre>
-import { reportGlobals, reportVariable, reportScroll } from 'reporter'
-
-reportGlobals({
-    cursor: true,
-    scroll: true
-})
-
-reportVariable('--gret', 4)
-
-const container = document.getElementById('container')
-
-container.addEventListener('scroll', reportScroll({
-    direction: 'horizontal',
-    name: '--container-scroll'
-}))</pre>
+                        <pre>import kicss from 'kicss'</pre>
+                        <p>Or:</p>
+                        <pre>import { reportGlobals, reportVariable, reportScroll } from 'kicss'</pre>
                     </section>
                 </section>
 

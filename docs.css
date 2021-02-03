@@ -1,11 +1,38 @@
+* {
+    box-sizing: border-box;
+}
+
 html {
     scroll-behavior: smooth;
 }
 
-pre {
+body {
+    font-size: 1.3em;
+    line-height: 1.4;
     margin: 0;
-    padding: 2em;
+    font-family: times, georgia, serif;
+}
+
+h1 {
+    font-size: 2em;
+}
+
+h2 {
+    font-size: 1.6em;
+}
+
+h3 {
+    font-size: 1.2em;
+}
+
+h4 {
     font-size: 1.1em;
+}
+
+pre {
+    margin-bottom: 1em;
+    padding: 1em;
+    overflow: auto;
     background: lavender;
 }
 
@@ -16,12 +43,29 @@ code {
     border-radius: 3px;
 }
 
+.container {
+    padding: 1em;
+}
+
+@media (min-width: 720px) {
+    .container {
+        width: calc(720px + 2em);
+        margin: 0 auto;
+        padding: 5em 0;
+    }
+}
+
 .topic {
-    margin-bottom: 6em;
+    margin-bottom: 3em;
 }
 
 .sub-topic {
-    margin-bottom: 4em;
+    margin-bottom: 2em;
+    padding-bottom: 2em;
+}
+
+.sub-topic:not(:last-child) {
+    border-bottom: 1px solid #ccc;
 }
 
 .anchor {
