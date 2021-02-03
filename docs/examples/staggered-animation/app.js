@@ -1,4 +1,4 @@
-import { reportVariable, reportIndex } from '../../../kicss.js'
+import { reportVariable, reportIndex } from '../../kicss.js'
 
 const content = document.querySelector('.content')
 for (let i = 0; i < 60; i++) {

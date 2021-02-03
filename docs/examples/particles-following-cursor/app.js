@@ -1,4 +1,4 @@
-import { reportIndex, reportGlobals } from '../../../kicss.js'
+import { reportIndex, reportGlobals } from '../../kicss.js'
 
 reportGlobals({
   cursor: true

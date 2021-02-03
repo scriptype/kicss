@@ -1,4 +1,4 @@
-import { reportVariable } from '../../../kicss.js'
+import { reportVariable } from '../../kicss.js'
 
 const items = document.querySelector('.items')
 const addBtn = document.querySelector('.add-item')

@@ -1,4 +1,4 @@
-import { reportVariable, reportScroll } from '../../../kicss.js'
+import { reportVariable, reportScroll } from '../../kicss.js'
 
 const tabs = Array.from(document.querySelectorAll('.tab'))
 const panels = Array.from(document.querySelectorAll('.carousel-item'))

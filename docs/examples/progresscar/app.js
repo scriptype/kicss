@@ -1,4 +1,4 @@
-import { reportGlobals, reportVariable } from '../../../kicss.js'
+import { reportGlobals, reportVariable } from '../../kicss.js'
 
 reportGlobals({
   scroll: true

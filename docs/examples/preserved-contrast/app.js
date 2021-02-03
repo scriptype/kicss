@@ -1,4 +1,4 @@
-import { reportGlobals } from '../../../kicss.js'
+import { reportGlobals } from '../../kicss.js'
 
 const header = document.querySelector('.heading')
 
