@@ -17,20 +17,24 @@
             <main class="content">
                 <section class="topic">
                     <h2>What?</h2>
-                    <p>Why don't we use CSS custom properties to communicate the interactivity needs of our UI to our CSS code so that we can implement a greater portion of interactivity right in the CSS? This would allow us to take more advantage of built-in CSS features such as hardware accelarated transitions and animations, snappy smooth scroll, HSL color scheme and many more.</p>
-                    <p>KICSS stands for "Keep It CSS". Naming is inspired by the famous programming motto <abbr title="Keep it simple, stupid">KISS</abbr>. "It" in the name refers only to style-concerned code.</p>
+                    <p>Let's use more CSS custom properties to help ourselves with communicating the interactivity between JavaScript and CSS! Instead of generating and manipulating dynamic styles in JavaScript, we can take advantage of the custom CSS properties to provide CSS with the seeds of interactivity. So that we can implement a greater portion of interactivity right in the CSS without sacrificing from the dynamic nature of styling that we often need.</p>
+                    <p>KICSS is just a mental guideline for creating dynamic UIs. Whether you use a CSS-in-JS tech or CSS Modules or a pre-processor language is irrelevant. However, it may reduce your need for these tools.</p>
+                    <p>KICSS stands for "Keep It CSS" and it refers to finding ways for keeping dynamic styling in CSS. Naming is inspired by the famous programming motto <abbr title="Keep it simple, stupid">KISS</abbr>.</p>
                     <p>It's also the name of a small JavaScript library that can help you achieve that goal.</p>
                     <p>Please check the examples below to understand the idea better.</p>
                 </section>
 
                 <section class="topic">
                     <h2>Why?</h2>
-                    <p>If followed, this approach should help you replacing much of your dynamically-generated CSS code with static, pure CSS that can deliver the same dynamic styling needs. It's just a mental guideline for creating dynamic UI elements. Whether you use a CSS-in-JS tech or CSS Modules or a pre-processor language is irrelevant. However, it may reduce your need for these tools.</p>
-                    <p>If you (optionally) use the JavaScript library, you can easily interpolate dynamic values and create components with nice, real-time animations.</p>
+                    <p>Simply because CSS is already an excellent language for dealing with the styling on web. If only CSS had built-in ways to declare styles that are based on more real-time user events and dynamically built UIs. But we can do it ourselves!</p>
+                    <p>If followed, this approach should help you replacing much of your dynamically-generated CSS code with static, pure CSS that can deliver the same dynamic styling needs.</p>
+                    <p>Depending on the case, it <em>may</em> eliminate your need for a 3rd party animation library.</p>
+                    <p>This way of thinking will force you to learn more about what CSS can do for you.</p>
+                    <p>If you (optionally) use the JavaScript library, you can easily interpolate dynamic values and create nice, real-time animations.</p>
                 </section>
 
                 <section class="topic">
-                    <h2>Examples</h2>
+                    <h2>Examples using kicss.js</h2>
                     <ul>
                         <li><a href="examples/camera">Camera</a></li>
                         <li><a href="examples/doodle-1">Doodle 1</a></li>
