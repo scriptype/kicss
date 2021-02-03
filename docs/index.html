@@ -55,22 +55,35 @@
                 </section>
 
                 <section class="topic">
-                    <h2>Usage</h2>
+                    <h2>Installation and usage of the JavaScript library</h2>
 
-                    <section class="sub-topic">
-                        <h3>Option 1: Include the script in HTML:</h3>
-                        <p>To access KICSS from global <code>window</code> object:</p>
-                        <pre>&lt;script type="module" src="kicss.js"&gt;&lt;/script&gt;</pre>
-                        <p>Or:</p>
-                        <pre>&lt;script type="module" src="kicss.js?report=cursor,scroll"&gt;&lt;/script&gt;</pre>
-                        <p>Available global properties to ask: <code>cursor</code>, <code>scroll</code>.</p>
+                    <section>
+                        <h3>Installation</h3>
+                        <pre>
+npm install --save kicss
+
+# or
+
+yarn add kicss</pre>
                     </section>
 
-                    <section class="sub-topic">
-                        <h3>Option 2: Import as module</h3>
-                        <pre>import kicss from 'kicss'</pre>
-                        <p>Or:</p>
-                        <pre>import { reportGlobals, reportVariable, reportScroll } from 'kicss'</pre>
+                    <section>
+                        <h3>Usage</h3>
+                        <section class="sub-topic">
+                            <h4>Option 1: Include the script in HTML:</h4>
+                            <p>To access KICSS from global <code>window</code> object:</p>
+                            <pre>&lt;script type="module" src="kicss.js"&gt;&lt;/script&gt;</pre>
+                            <p>Or:</p>
+                            <pre>&lt;script type="module" src="kicss.js?report=cursor,scroll"&gt;&lt;/script&gt;</pre>
+                            <p>Available global properties to ask: <code>cursor</code>, <code>scroll</code>.</p>
+                        </section>
+
+                        <section class="sub-topic">
+                            <h4>Option 2: Import as module</h4>
+                            <pre>import kicss from 'kicss'</pre>
+                            <p>Or:</p>
+                            <pre>import { reportGlobals, reportVariable, reportScroll } from 'kicss'</pre>
+                        </section>
                     </section>
                 </section>
 

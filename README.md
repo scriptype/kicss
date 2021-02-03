@@ -42,9 +42,21 @@ If you (optionally) use the JavaScript library, you can easily interpolate dynam
 *   [Staggered Animation](https://enes.in/kicss/examples/staggered-animation)
 *   [Telegram Spinner](https://enes.in/kicss/examples/telegram-spinner)
 
-## Usage
+## Installation and usage of the JavaScript library
 
-### Option 1: Include the script in HTML:
+## Installation
+
+```sh
+npm install --save kicss
+
+# or
+
+yarn add kicss
+```
+
+### Usage
+
+#### Option 1: Include the script in HTML:
 
 To access KICSS from global `window` object:
 
@@ -60,7 +72,7 @@ Or:
 
 Available global properties to ask: `cursor`, `scroll`.
 
-### Option 2: Import as module
+#### Option 2: Import as module
 
 ```js
 import kicss from 'kicss'
