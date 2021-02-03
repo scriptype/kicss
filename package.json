@@ -1,6 +1,6 @@
 {
   "name": "kicss",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "A small JavaScript library that can help you with keeping the UI logic code decoupled from the CSS code, while making it very easy to create components with nice, real-time animations.",
   "main": "kicss.js",
   "directories": {
