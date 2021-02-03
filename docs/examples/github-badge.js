@@ -1,7 +1,7 @@
 (() => {
-  const host = 'https://github.com/scriptype/kicss/blob/master'
+  const host = 'https://github.com/scriptype/kicss/blob/master/docs'
   const link = document.createElement('a')
-  const pathname = document.location.pathname.replace('/kicss', '')
+  const pathname = document.location.pathname.replace('/kicss', '').replace('/docs', '')
   link.href = `${host}${pathname}`
   link.innerHTML = `
     <svg style="width: 24px" role="img" aria-label="Check source code on GitHub" viewBox="0 0 1024 1024">
