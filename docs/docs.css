@@ -47,9 +47,9 @@ code {
     padding: 1em;
 }
 
-@media (min-width: 720px) {
+@media (min-width: 760px) {
     .container {
-        width: calc(720px + 2em);
+        width: 720px;
         margin: 0 auto;
         padding: 2em 0;
     }
