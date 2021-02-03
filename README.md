@@ -16,7 +16,7 @@ Please check the examples below to understand the idea better.
 
 Simply because CSS is already an excellent language for dealing with the styling on web. If only CSS had built-in ways to declare styles that are based on more real-time user events and dynamically built UIs. But we can do it ourselves!
 
-If followed, this approach should help you replacing much of your dynamically-generated CSS code with static, pure CSS that can deliver the same dynamic styling needs.
+If followed, this approach should help you with replacing much of your dynamically-generated CSS code with static, pure CSS that can deliver the same dynamic styling needs.
 
 Depending on the case, it <em>may</em> eliminate your need for a 3rd party animation library.
 
