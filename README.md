@@ -44,7 +44,7 @@ If you (optionally) use the JavaScript library, you can easily interpolate dynam
 
 ## Installation and usage of the JavaScript library
 
-## Installation
+### Installation
 
 ```sh
 npm install --save kicss
