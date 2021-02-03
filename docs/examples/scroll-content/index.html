@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Scroll content experiment</title>
+        <link rel="icon" type="image/png" href="favicon.png" />
+        <link rel="stylesheet" href="../common.css" />
+        <link rel="stylesheet" href="./style.css" />
+    </head>
+
+    <body>
+        <div class="container">
+            <section class="tabs">
+                <span class="active-tab-indicator"></span>
+                <button class="tab">1</button>
+                <button class="tab">2</button>
+                <button class="tab">3</button>
+                <button class="tab">4</button>
+                <button class="tab">5</button>
+            </section>
+            <main class="content">
+                <section class="panel">
+                    <h1 class="panel-content">Scroll down</h1>
+                </section>
+                <section class="panel">
+                    <p class="panel-content">a new content</p>
+                </section>
+                <section class="panel">
+                    <p class="panel-content">Sit optio odit.</p>
+                </section>
+                <section class="panel">
+                    <p class="panel-content">Lorem repellendus!</p>
+                </section>
+                <section class="panel">
+                    <p class="panel-content">The End.</p>
+                </section>
+            </main>
+        </div>
+
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="display: none">
+          <defs>
+            <filter id="goey">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+              <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goey" />
+              <feBlend in="SourceGraphic" in2="goey" />
+            </filter>
+          </defs>
+        </svg>
+        <script type="module" src="./app.js"></script>
+        <script src="../github-badge.js"></script>
+    </body>
+
+</html>
