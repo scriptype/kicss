@@ -36,22 +36,23 @@
      * Rotation of each wheel
      * - wheel circumference: 2 * π * (size / 2) = π * size
      * - road length: viewport-width
-     * - scroll-y: value between 0 and 1
+     * - scroll-y-1: value between 0 and 1
      *
      * We need to use a custom absolute number for viewport-width, instead of 100vw,
      * because otherwise it can't be multiplied by 1turn
      *
      * To calculate how much rotation is needed, this formula is used:
-     * (wheel circumference / road length) = (rotation / (360deg * scroll-y))
+     * 1turn * scroll-y-1 * (road-length / circumference)
      *
      * To put in human language:
      * For one full wheel rotation to happen, the car must move exactly as much
      * as the circumference of the wheel. This means page should be scrolled just
      * enough for the car to move exactly one wheel circumference forward. */
+    --circumference: calc(var(--π) * var(--size));
+    --road: calc(var(--viewport-width) - var(--car-width));
+    --rotations: calc(var(--road) / var(--circumference));
     transform: rotate(
-        calc(
-            var(--scroll-y-1) * 1turn * var(--viewport-width) / (var(--π) * var(--size))
-        )
+        calc(1turn * var(--rotations) * var(--scroll-y-1))
     );
 }
 
