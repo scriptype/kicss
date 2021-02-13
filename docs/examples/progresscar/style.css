@@ -12,20 +12,20 @@
     bottom: 0;
     left: 0;
     width: var(--car-width-px);
-    height: calc(var(--car-width-px) / 3);
+    height: calc(var(--car-width-px) / 3.2);
     background: url('../assets/progresscar.png') no-repeat center center;
     background-size: 100%;
-    transform:
-        translateX(
-            calc(var(--scroll-y-1) * (100vw - var(--car-width-px)))
-        );
+    --road-length: calc(100vw - var(--car-width-px));
+    transform: translateX(
+        calc(var(--scroll-y-1) * var(--road-length))
+    );
 }
 
 .wheel {
     --size: calc(var(--car-width) / 14);
     --size-px: calc(var(--size) * 1px);
     position: absolute;
-    bottom: calc(var(--size-px) / 1.6);
+    bottom: calc(var(--size-px) / 2);
     display: inline-block;
     width: var(--size-px);
     height: var(--size-px);
@@ -49,8 +49,8 @@
      * as the circumference of the wheel. This means page should be scrolled just
      * enough for the car to move exactly one wheel circumference forward. */
     --circumference: calc(var(--π) * var(--size));
-    --road: calc(var(--viewport-width) - var(--car-width));
-    --rotations: calc(var(--road) / var(--circumference));
+    --road-length: calc(var(--vw) - var(--car-width));
+    --rotations: calc(var(--road-length) / var(--circumference));
     transform: rotate(
         calc(1turn * var(--rotations) * var(--scroll-y-1))
     );
