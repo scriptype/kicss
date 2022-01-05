@@ -14,7 +14,7 @@ const reportResponsiveVariable = (name, valueFn, scope) => {
 
 const reportPageCursor = (event) => {
   let x, y
-  if (event.touches.length) {
+  if (event.touches) {
     x = event.touches.item(0).clientX
     y = event.touches.item(0).clientY
   } else {
