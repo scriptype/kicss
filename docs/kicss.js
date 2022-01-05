@@ -188,7 +188,15 @@ const reportResponsiveVariable = (name, valueFn, scope) => {
   setCSSProperty(name, valueFn(), scope)
 }
 
-const reportPageCursor = ({ x, y }) => {
+const reportPageCursor = (event) => {
+  let x, y
+  if (event.touches) {
+    x = event.touches.item(0).clientX
+    y = event.touches.item(0).clientY
+  } else {
+    x = event.x
+    y = event.y
+  }
   setCSSProperty('--cursor-x', `${x}px`)
   setCSSProperty('--cursor-y',`${y}px`)
 
@@ -325,6 +333,7 @@ const reportIndex = (selector, {
 const reportGlobals = ({ scroll, cursor } = { scroll: true, cursor: true }) => {
   if (cursor) {
     window.addEventListener('mousemove', reportPageCursor)
+    window.addEventListener('touchmove', reportPageCursor)
     reportPageCursor({ x: 0, y: 0 })
   }
   if (scroll) {
