@@ -30,9 +30,9 @@ const { performInterpolation, purgeRangeCache } = (() => {
       cache = true,
       cacheDuration = 300
     } = interpolation
-    const [cachedInputRange, cachedOutputRane] = cache
-      ? cacheRanges(`${interpolationName}-${id}`, [inputRange, outputRange], cacheDuration)
-      : [
+    const [cachedInputRange, cachedOutputRane] = cache ?
+      cacheRanges(`${interpolationName}-${id}`, [inputRange, outputRange], cacheDuration) :
+      [
         typeof inputRange === 'function' ? inputRange() : inputRange,
         typeof outputRange === 'function' ? outputRange() : outputRange,
       ]
@@ -330,6 +330,32 @@ const reportIndex = (selector, {
   })
 }
 
+const globalScroll = () => {
+    let interpolations = scroll.interpolations
+    let direction = scroll.direction
+    window.addEventListener('scroll', reportPageScroll({
+      direction,
+      interpolations
+    }))
+    window.addEventListener('resize', (e) => {
+      purgeRangeCache()
+      reportPageScroll({
+        direction,
+        interpolations
+      })(e)
+    })
+    reportPageScroll({
+      direction,
+      interpolations
+    })()
+}
+
+const cursor = () => {
+  window.addEventListener('mousemove', reportPageCursor)
+  window.addEventListener('touchmove', reportPageCursor)
+  reportPageCursor({ x: 0, y: 0 })
+}
+
 const reportGlobals = ({ scroll, cursor } = { scroll: true, cursor: true }) => {
   if (cursor) {
     window.addEventListener('mousemove', reportPageCursor)
@@ -368,7 +394,8 @@ if (currentScript) {
     reportScroll,
     reportVariable,
     reportIndex,
-    reportGlobals
+    reportGlobals,
+    cursor
   }
 }
 
@@ -376,5 +403,14 @@ export {
   reportScroll,
   reportVariable,
   reportIndex,
-  reportGlobals
+  reportGlobals,
+  cursor
+}
+
+export default {
+  reportScroll,
+  reportVariable,
+  reportIndex,
+  reportGlobals,
+  cursor
 }
