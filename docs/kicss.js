@@ -330,26 +330,6 @@ const reportIndex = (selector, {
   })
 }
 
-const globalScroll = () => {
-    let interpolations = scroll.interpolations
-    let direction = scroll.direction
-    window.addEventListener('scroll', reportPageScroll({
-      direction,
-      interpolations
-    }))
-    window.addEventListener('resize', (e) => {
-      purgeRangeCache()
-      reportPageScroll({
-        direction,
-        interpolations
-      })(e)
-    })
-    reportPageScroll({
-      direction,
-      interpolations
-    })()
-}
-
 const cursor = () => {
   window.addEventListener('mousemove', reportPageCursor)
   window.addEventListener('touchmove', reportPageCursor)

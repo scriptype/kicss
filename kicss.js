@@ -154,6 +154,36 @@ const reportIndex = (selector, {
   })
 }
 
+const cursor = () => {
+  window.addEventListener('mousemove', reportPageCursor)
+  window.addEventListener('touchmove', reportPageCursor)
+  reportPageCursor({ x: 0, y: 0 })
+}
+
+const time = () => {
+  const reportSeconds = () => {
+    const seconds = (Date.now() - start) / 1000
+    reportVariable('--seconds', seconds)
+  }
+
+  const reportMilliseconds = () => {
+    const milliseconds = (Date.now() - start)
+    reportVariable('--milliseconds', milliseconds)
+    millisecondsLoop = requestAnimationFrame(reportMilliseconds)
+  }
+
+  let start = Date.now()
+  let secondsLoop = window.setInterval(reportSeconds, 1000)
+  let millisecondsLoop = requestAnimationFrame(reportMilliseconds)
+
+  return {
+    clear() {
+      window.clearInterval(secondsLoop)
+      window.cancelAnimationFrame(millisecondsLoop)
+    }
+  }
+}
+
 const reportGlobals = ({ scroll, cursor } = { scroll: true, cursor: true }) => {
   if (cursor) {
     window.addEventListener('mousemove', reportPageCursor)
@@ -192,7 +222,9 @@ if (currentScript) {
     reportScroll,
     reportVariable,
     reportIndex,
-    reportGlobals
+    reportGlobals,
+    cursor,
+    time
   }
 }
 
@@ -200,5 +232,16 @@ export {
   reportScroll,
   reportVariable,
   reportIndex,
-  reportGlobals
+  reportGlobals,
+  cursor,
+  time
+}
+
+export default {
+  reportScroll,
+  reportVariable,
+  reportIndex,
+  reportGlobals,
+  cursor,
+  time
 }
