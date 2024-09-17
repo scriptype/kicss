@@ -1,0 +1,42 @@
+body {
+    height: 100vh;
+}
+
+.container {
+    height: 100%;
+}
+
+.content {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    place-items: center;
+    perspective: 100vmax;
+}
+
+.item {
+    display: grid;
+    place-items: center;
+    width: 30vmin;
+    height: 30vmin;
+    font-size: 5vmin;
+    color: black;
+    border-radius: 8px;
+}
+
+.item-seconds {
+    background: hsl(
+        calc(var(--seconds) * 10),
+        50%,
+        60%
+    )
+}
+
+.item-milliseconds {
+    background: hsl(
+        calc(var(--milliseconds) / 100),
+        50%,
+        60%
+    )
+}
